@@ -1,2 +1,1 @@
-Develop Android Application with Kotlin 
-##JetPack Compose
+Develop Android Application with Kotlin and JetPack Compose
