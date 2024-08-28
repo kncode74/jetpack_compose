@@ -88,8 +88,9 @@ class MainActivity : ComponentActivity() {
                             .fillMaxSize()
                             .padding(innerPadding),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Top,
+                        verticalArrangement = Arrangement.Center,
                     ) {
+
                         CardListView(itemModel = dataList.value) { discount ->
                             totalDiscount += discount
                         }
