@@ -1,9 +1,9 @@
-package com.example.jetpack.com.example.jetpack
+package com.example.jetpack.ui.Todo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.jetpack.TodoResponse
+import com.example.jetpack.models.TodoResponse
 
 class ToDoViewModel : ViewModel() {
     private var _todoList = MutableLiveData<List<TodoResponse>>()

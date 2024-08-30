@@ -1,6 +1,6 @@
-package com.example.jetpack.com.example.jetpack
+package com.example.jetpack.ui.Todo
 
-import com.example.jetpack.TodoResponse
+import com.example.jetpack.models.TodoResponse
 
 object TodoManager {
 
