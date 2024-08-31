@@ -19,7 +19,7 @@ class ToDoViewModel : ViewModel() {
 
 
     private fun getAllTodo() {
-        _todoList.value = TodoManager.getAllTodo().reversed()
+        _todoList.value = TodoManager.getAllTodo()
     }
 
     fun addTodo(title: String) {
@@ -30,6 +30,11 @@ class ToDoViewModel : ViewModel() {
 
     fun deleteTodo(id: Int) {
         TodoManager.deleteTodo(id)
+        getAllTodo()
+    }
+
+    fun selectItem(index: Int) {
+        TodoManager.selectItem(index)
         getAllTodo()
     }
 

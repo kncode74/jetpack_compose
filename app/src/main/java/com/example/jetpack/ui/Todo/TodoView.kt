@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -78,9 +79,15 @@ fun ToDoView(viewModel: ToDoViewModel) {
                 LazyColumn(
                     content = {
                         itemsIndexed(it) { index: Int, item: TodoResponse ->
-                            TodoItem(item = item, onDelete = {
-                                viewModel.deleteTodo(index)
-                            }, number = index + 1)
+                            TodoItem(
+                                item = item, number = index + 1,
+                                onDelete = {
+                                    viewModel.deleteTodo(index)
+                                },
+                                onSelected = {
+                                    viewModel.selectItem(index)
+                                },
+                            )
                         }
                     }
                 )
@@ -99,7 +106,7 @@ fun ToDoView(viewModel: ToDoViewModel) {
 }
 
 @Composable
-fun TodoItem(item: TodoResponse, onDelete: () -> Unit, number: Int?) {
+fun TodoItem(item: TodoResponse, onDelete: () -> Unit, number: Int?, onSelected: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -114,6 +121,7 @@ fun TodoItem(item: TodoResponse, onDelete: () -> Unit, number: Int?) {
             modifier = Modifier.weight(1f)
         ) {
             Row {
+                item.isSold?.let { Checkbox(checked = it, onCheckedChange = { onSelected() }) }
                 Text(
                     text = "${number.toString()}. ",
                     fontSize = 20.sp,

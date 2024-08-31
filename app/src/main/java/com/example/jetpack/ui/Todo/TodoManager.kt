@@ -11,54 +11,14 @@ object TodoManager {
             discount = 20,
             isSold = true,
 
-            ), TodoResponse(
+            ),
+        TodoResponse(
             title = "Unikwan",
             imageResource = "https://i.pinimg.com/564x/28/fb/47/28fb47d48d382c0debb7ea6d93dc79ed.jpg",
             discount = 20,
             isSold = true,
 
-            ), TodoResponse(
-            title = "Unikwan",
-            imageResource = "https://i.pinimg.com/564x/28/fb/47/28fb47d48d382c0debb7ea6d93dc79ed.jpg",
-            discount = 20,
-            isSold = true,
-
-            ), TodoResponse(
-            title = "Unikwan",
-            imageResource = "https://i.pinimg.com/564x/28/fb/47/28fb47d48d382c0debb7ea6d93dc79ed.jpg",
-            discount = 20,
-            isSold = true,
-
-            ), TodoResponse(
-            title = "Unikwan",
-            imageResource = "https://i.pinimg.com/564x/28/fb/47/28fb47d48d382c0debb7ea6d93dc79ed.jpg",
-            discount = 20,
-            isSold = true,
-
-            ), TodoResponse(
-            title = "Unikwan",
-            imageResource = "https://i.pinimg.com/564x/28/fb/47/28fb47d48d382c0debb7ea6d93dc79ed.jpg",
-            discount = 20,
-            isSold = false,
-
-            ), TodoResponse(
-            title = "Unikwan",
-            imageResource = "https://i.pinimg.com/564x/28/fb/47/28fb47d48d382c0debb7ea6d93dc79ed.jpg",
-            discount = 20,
-            isSold = true,
-
-            ), TodoResponse(
-            title = "Unikwan",
-            imageResource = "https://i.pinimg.com/564x/28/fb/47/28fb47d48d382c0debb7ea6d93dc79ed.jpg",
-            discount = 20,
-            isSold = false,
-
-            ), TodoResponse(
-            title = "Unikwan",
-            imageResource = "https://i.pinimg.com/564x/28/fb/47/28fb47d48d382c0debb7ea6d93dc79ed.jpg",
-            discount = 20,
-            isSold = true,
-        )
+            ),
     )
 
 
@@ -79,5 +39,8 @@ object TodoManager {
 
     fun deleteTodo(index: Int) {
         todoList.removeAt(index)
+    }
+    fun selectItem(index: Int){
+        todoList[index ].isSold = !todoList[index].isSold!!
     }
 }
