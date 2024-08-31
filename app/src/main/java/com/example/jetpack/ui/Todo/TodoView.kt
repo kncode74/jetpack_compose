@@ -1,5 +1,6 @@
-package com.example.jetpack
+package com.example.jetpack.ui.Todo
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,11 +14,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -31,66 +36,77 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.jetpack.com.example.jetpack.ToDoViewModel
+import com.example.jetpack.models.TodoResponse
 
-
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ToDoView(viewModel: ToDoViewModel) {
     val todoList by viewModel.todoList.observeAsState()
     var inputText by remember {
         mutableStateOf("")
     }
-
-    Column(
-        modifier = Modifier
-            .fillMaxHeight()
-            .padding(8.dp)
-    ) {
-
-        Row(
+    Scaffold(topBar = {
+        TopAppBar(title = { Text(text = "Todo App") })
+    }) { paddingValues ->
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+                .fillMaxHeight()
+                .padding(paddingValues = paddingValues)
+                .padding(8.dp)
         ) {
-            OutlinedTextField(
-                modifier = Modifier.weight(1f),
-                value = inputText,
-                onValueChange = {
-                    inputText = it
-                })
-            Button(onClick = { viewModel.addTodo(inputText) }) {
-                Row {
-                    Text(text = "Add Data")
-                }
-            }
-
-        }
-
-        todoList?.let {
-            LazyColumn(
-                content = {
-                    itemsIndexed(it) { index: Int, item: TodoResponse ->
-                        TodoItem(item = item, onDelete = {
-                            viewModel.deleteTodo(index)
-                        }, number = index + 1)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                OutlinedTextField(
+                    modifier = Modifier.weight(1f),
+                    value = inputText,
+                    onValueChange = {
+                        inputText = it
+                    })
+                Button(onClick = { viewModel.addTodo(inputText) }) {
+                    Row {
+                        Text(text = "Add Data")
                     }
                 }
-            )
-        } ?: Text(
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center,
-            text = "No items yet",
-            fontSize = 16.sp
-        )
 
+            }
+
+            todoList?.let {
+                LazyColumn(
+                    content = {
+                        itemsIndexed(it) { index: Int, item: TodoResponse ->
+                            TodoItemContent(
+                                item = item, number = index + 1,
+                                onDelete = {
+                                    viewModel.deleteTodo(index)
+                                },
+                                onSelected = {
+                                    viewModel.selectItem(index)
+                                },
+                            )
+                        }
+                    }
+                )
+            } ?: Text(
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                text = "No items yet",
+                fontSize = 16.sp
+            )
+
+
+        }
 
     }
 
 }
 
 @Composable
-fun TodoItem(item: TodoResponse, onDelete: () -> Unit, number: Int?) {
+fun TodoItemContent(item: TodoResponse, onDelete: () -> Unit, number: Int?, onSelected: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -105,6 +121,7 @@ fun TodoItem(item: TodoResponse, onDelete: () -> Unit, number: Int?) {
             modifier = Modifier.weight(1f)
         ) {
             Row {
+                item.isSold?.let { Checkbox(checked = it, onCheckedChange = { onSelected() }) }
                 Text(
                     text = "${number.toString()}. ",
                     fontSize = 20.sp,
