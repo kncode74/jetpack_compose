@@ -79,7 +79,7 @@ fun ToDoView(viewModel: ToDoViewModel) {
                 LazyColumn(
                     content = {
                         itemsIndexed(it) { index: Int, item: TodoResponse ->
-                            TodoItem(
+                            TodoItemContent(
                                 item = item, number = index + 1,
                                 onDelete = {
                                     viewModel.deleteTodo(index)
@@ -106,7 +106,7 @@ fun ToDoView(viewModel: ToDoViewModel) {
 }
 
 @Composable
-fun TodoItem(item: TodoResponse, onDelete: () -> Unit, number: Int?, onSelected: () -> Unit) {
+fun TodoItemContent(item: TodoResponse, onDelete: () -> Unit, number: Int?, onSelected: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
