@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.jetpack.models.TodoResponse
 
-class ToDoViewModel : ViewModel() {
+class ToDoListViewModel : ViewModel() {
     // กำหนด _todoList เป็น MutableLiveData เพื่อให้สามารถอัพเดตข้อมูลได้
     private var _todoList = MutableLiveData<List<TodoResponse>>()
 
@@ -19,22 +19,22 @@ class ToDoViewModel : ViewModel() {
 
 
     private fun getAllTodo() {
-        _todoList.value = TodoManager.getAllTodo()
+        _todoList.value = TodoListManager.getAllTodo()
     }
 
     fun addTodo(title: String) {
-        TodoManager.addTodo(title)
+        TodoListManager.addTodo(title)
         getAllTodo()
 
     }
 
     fun deleteTodo(id: Int) {
-        TodoManager.deleteTodo(id)
+        TodoListManager.deleteTodo(id)
         getAllTodo()
     }
 
     fun selectItem(index: Int) {
-        TodoManager.selectItem(index)
+        TodoListManager.selectItem(index)
         getAllTodo()
     }
 
