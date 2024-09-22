@@ -4,7 +4,4 @@ import androidx.lifecycle.ViewModel
 
 class TodoDetailViewModel : ViewModel() {
 
-    init {
-
-    }
 }

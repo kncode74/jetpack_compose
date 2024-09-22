@@ -41,7 +41,7 @@ import com.example.jetpack.models.TodoResponse
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ToDoView(viewModel: ToDoViewModel) {
+fun ToDoListView(viewModel: ToDoListViewModel) {
     val todoList by viewModel.todoList.observeAsState()
     var inputText by remember {
         mutableStateOf("")
@@ -106,7 +106,12 @@ fun ToDoView(viewModel: ToDoViewModel) {
 }
 
 @Composable
-fun TodoItemContent(item: TodoResponse, onDelete: () -> Unit, number: Int?, onSelected: () -> Unit) {
+fun TodoItemContent(
+    item: TodoResponse,
+    onDelete: () -> Unit,
+    number: Int?,
+    onSelected: () -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -121,7 +126,7 @@ fun TodoItemContent(item: TodoResponse, onDelete: () -> Unit, number: Int?, onSe
             modifier = Modifier.weight(1f)
         ) {
             Row {
-                item.isSold?.let { Checkbox(checked = it, onCheckedChange = { onSelected() }) }
+                Checkbox(checked = item.isSold == false, onCheckedChange = { onSelected() })
                 Text(
                     text = "${number.toString()}. ",
                     fontSize = 20.sp,
